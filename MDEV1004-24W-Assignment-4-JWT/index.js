@@ -5,13 +5,16 @@
  * Date: 03 April 2024
  */
 
-
+require('dotenv').config();
 const express = require('express');
+const { mongoDB } = require('./database/db.js'); // Importing the mongoose object for MongoDB connection
 const bodyParser = require('body-parser');
 const cors=require('cors');
 const app = express();
 const http = require("http");
-const port = 3000;
+const { API_PORT } = process.env;
+const port = process.env.PORT || API_PORT;
+
 app.use(bodyParser.json());
 
 app.listen(port, async ()=>{
