@@ -19,4 +19,11 @@ app.use(bodyParser.json());
 
 app.listen(port, async ()=>{
     console.log(`server is running on port ${port}`)
+
+// Ensuring the connection is established to mongoDB database before syncing the favourite books model
+await mongoDB.connection.once('open', async () => {
+   const { BookModel, syncModelWithCloud } = require('./model/bookModel');
+    await syncModelWithCloud();
+    console.log('Finished executing SyncModeWithCloud')
+  });
 })
