@@ -12,7 +12,7 @@ app.use(express.json());
 const bookController = require("../controller/controller");
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const User = require("../models/userModel");
+const User = require("../model/userModel");
 // Create an instance of the Express Router
 const router = express.Router();
 
@@ -31,5 +31,11 @@ router.put('/updateBook/:id', bookController.updateBook);
 
 // 5.API Endpoint to delete a book using ID
 router.delete('/deleteBookByID/:id', bookController.deleteBookByID);
+
+//register
+router.post("/register", bookController.registerUser);
+
+//login
+router.post("/login", bookController.loginUser);
 
 module.exports = router;

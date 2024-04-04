@@ -71,3 +71,65 @@ exports.deleteBookByID = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.registerUser = async (req, res) => {
+        try{
+          // fetching user information
+          const {firstname,lastname,email,password} = req.body;
+  
+          // validating user information
+          if(!(email && password && lastname && firstname)){
+              res.status(400).json({error : "All fields are required"})
+          }
+  
+          // checking if whether the user already exists in the database
+          const CheckUser = await UserModel.findOne({email});
+          if(CheckUser){
+              return res.json({user : "user is already registered"})
+          }
+          // Encrypting the user password
+          encryptedPassword = await bcrypt.hash(password, 12)
+  
+          // Creating the user in mongo database
+          const user = await UserModel.create({
+              firstname,
+              lastname,
+              email: email.toLowerCase(),
+              password: encryptedPassword
+          })
+          res.status(201).json(user);
+      }
+  
+      catch(err){
+          console.log(err);
+      }
+};
+
+exports.loginUser = async (req, res) => {
+        // fetching user information
+        try{
+          const{email,password} = req.body;
+
+          // validating user information
+          if(!(email && password)){
+              res.status(400).send("Dont keep the fields blanks")
+          }
+
+          // checking if whether the user already exists in the database
+          const user = await UserModel.findOne({email});
+
+          // validating the user password with the hashed encrypted password stored in the database
+          if(user && (bcrypt.compareSync(password, user.password))){
+              res.status(201).json(user)
+          }
+          else {
+              // Invalid credentials
+              res.status(401).json({error : 'Invalid password or email'});
+          }
+  
+      }
+      catch(err){
+          console.log(err);
+      }
+
+};

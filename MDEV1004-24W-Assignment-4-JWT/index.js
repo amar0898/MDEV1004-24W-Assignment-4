@@ -9,6 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const { mongoDB } = require('./database/db.js'); // Importing the mongoose object for MongoDB connection
 const bodyParser = require('body-parser');
+const routes = require('./router/routes.js'); // Importing book routes
 const cors=require('cors');
 const app = express();
 const http = require("http");
@@ -16,6 +17,7 @@ const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT;
 
 app.use(bodyParser.json());
+app.use('/', routes);
 
 app.listen(port, async ()=>{
     console.log(`server is running on port ${port}`)
