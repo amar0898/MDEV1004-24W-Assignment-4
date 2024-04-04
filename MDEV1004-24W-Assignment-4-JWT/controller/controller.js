@@ -97,6 +97,15 @@ exports.registerUser = async (req, res) => {
               email: email.toLowerCase(),
               password: encryptedPassword
           })
+
+          // Create a signed JWT token for security 
+          const token = jwt.sign(
+            { user_id:user._id,email}, 
+            process.env.TOKEN_KEY, 
+            { expiresIn: "15m" }); 
+
+         //saving the token in db 
+          user.token = token;
           res.status(201).json(user);
       }
   
@@ -120,6 +129,12 @@ exports.loginUser = async (req, res) => {
 
           // validating the user password with the hashed encrypted password stored in the database
           if(user && (bcrypt.compareSync(password, user.password))){
+            //creating a JWT token for security 
+            const token = jwt.sign(
+              { user_id:user._id,email}, 
+              process.env.TOKEN_KEY, 
+              { expiresIn: "15m" }); 
+              user.token = token;
               res.status(201).json(user)
           }
           else {
