@@ -7,7 +7,7 @@
 
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { UserModel } = require("../models/userModel");
+const { UserModel } = require("../model/userModel");
 const express = require("express")
 const app = express();
 app.use(express.json());
@@ -17,7 +17,6 @@ const { BookModel, syncModelWithCloud } = require("../model/bookModel"); // Impo
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await BookModel.find();
-    
     //display the result into tabular format
     res.json(books)
 
@@ -129,6 +128,10 @@ exports.loginUser = async (req, res) => {
 
           // validating the user password with the hashed encrypted password stored in the database
           if(user && (bcrypt.compareSync(password, user.password))){
+            
+            // storing the user session
+            req.session.user = user._id;
+
             //creating a JWT token for security 
             const token = jwt.sign(
               { user_id:user._id,email}, 
