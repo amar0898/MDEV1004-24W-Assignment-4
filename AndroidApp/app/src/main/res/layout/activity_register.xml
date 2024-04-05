@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:text="Register For the App"
+        android:text="SignUp For App"
         android:textAlignment="center"
-        android:textColor="@color/red"
+        android:textColor="@color/green"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -108,9 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/app_dark_blue"
+                android:backgroundTint="@color/green"
                 android:onClick="registerClicked"
-                android:text="Register" />
+                android:text="Sign UP" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

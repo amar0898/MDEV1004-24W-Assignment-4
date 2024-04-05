@@ -15,7 +15,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="#68DD06"
-        android:backgroundTint="@color/app_dark_blue"
+        android:backgroundTint="@color/green"
         android:breakStrategy="simple"
         android:clickable="false"
         android:foregroundGravity="center"
